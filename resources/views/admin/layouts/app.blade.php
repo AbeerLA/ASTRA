@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin Terpadu - Desa Kepongpongan</title>
+    <title>Panel Admin Terpadu - Desa Sejahtera Astra Kepongpongan</title>
     <!-- Google Fonts & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -104,18 +104,23 @@
         <div class="flex flex-col">
             <!-- Astra Branding Header -->
             <div class="p-5 border-b border-surface-border">
-                <div class="flex items-center gap-3">
-                    <div
-                        class="w-10 h-10 rounded-xl bg-brand-navy flex items-center justify-center text-white shadow-md shadow-brand-navy/20 shrink-0">
-                        <span class="material-symbols-outlined text-[24px]">account_balance</span>
-                    </div>
-                    <div class="flex flex-col">
+                <div class="flex items-center gap-2.5">
+
+                    <img src="{{ asset('images/LOGO SERA.png') }}" alt="LOGO SERA"
+                        class="h-7 w-auto object-contain shrink-0">
+
+                    <div class="flex flex-col justify-center gap-0.5">
+
                         <div class="flex items-center gap-1.5">
-                            <span class="font-extrabold text-brand-navy text-[17px] tracking-tight">Astra Desa</span>
-                            <span
-                                class="text-[10px] font-bold uppercase tracking-wider bg-brand-orange-light text-brand-orange px-1.5 py-0.5 rounded">Digital</span>
+                            <span class="font-extrabold text-brand-navy text-[15px] tracking-tight leading-tight">
+                                Desa Sejahtera Astra
+                            </span>
                         </div>
-                        <span class="text-xs text-slate-500 font-medium">Panel Kendali Terpadu</span>
+
+                        <span class="text-[11px] text-slate-500 font-medium leading-tight">
+                            Panel Kendali Terpadu
+                        </span>
+
                     </div>
                 </div>
                 <div
@@ -123,7 +128,8 @@
                     <div class="flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-brand-orange animate-pulse"></span>
                         <div class="flex flex-col">
-                            <span class="text-xs font-bold text-brand-navy leading-none">Desa Kepongpongan</span>
+                            <span class="text-xs font-bold text-brand-navy leading-none">Desa Sejahtera Astra <br>
+                                Kepongpongan</span>
                             <span class="text-[11px] text-slate-500 font-medium mt-0.5">Kec. Talun • Kab. Cirebon</span>
                         </div>
                     </div>
@@ -226,7 +232,7 @@
             class="fixed top-0 left-72 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-surface-border z-30 flex items-center justify-between px-8">
             <div class="flex items-center gap-4 flex-1 max-w-xl">
                 <div class="text-xs text-slate-400 font-medium flex items-center gap-1.5">
-                    <span>Admin Desa</span>
+                    <span>Admin Desa Sejahtera Astra</span>
                     <span>/</span>
                     <span class="font-bold text-brand-navy" id="breadcrumb-title">Ringkasan Dashboard</span>
                 </div>
@@ -264,6 +270,7 @@
                                 Publik Terhubung</span>
                         </div>
                         <h1 class="text-2xl font-extrabold text-brand-navy">Selamat Datang di Panel Kendali Desa
+                            Sejahtera Astra
                             Kepongpongan</h1>
                         <p class="text-xs text-slate-600 mt-1 leading-relaxed">Kelola dan perbarui seluruh konten
                             beranda desa: banner carousel hero, direktori fasilitas warga, destinasi wisata, serta tanya
@@ -303,7 +310,7 @@
                     <div class="p-4 rounded-xl bg-white border border-surface-border hover:shadow-md transition-all cursor-pointer"
                         onclick="switchView('view-tourism')">
                         <div class="flex items-center justify-between text-xs text-slate-500 font-bold uppercase">
-                            <span>Wisata Desa</span>
+                            <span>Wisata Desa Sejahtera Astra</span>
                             <span class="material-symbols-outlined text-brand-orange">explore</span>
                         </div>
                         <div class="my-2"><span class="text-2xl font-extrabold text-brand-navy"
@@ -384,7 +391,8 @@
                     <div
                         class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5 pb-4 border-b border-surface-border">
                         <div>
-                            <h2 class="text-lg font-bold text-brand-navy">Destinasi Wisata Desa &amp; Reservasi Tiket
+                            <h2 class="text-lg font-bold text-brand-navy">Destinasi Wisata Desa Sejahtera Astra &amp;
+                                Reservasi Tiket
                             </h2>
                             <p class="text-xs text-slate-500 mt-0.5">Kelola wahana BUMDes, tarif tiket, kuota harian,
                                 serta tombol aktif/nonaktifkan.</p>
@@ -408,7 +416,8 @@
             <!-- ================= VIEW 6: 4 PILAR ASTRA ================= -->
             <div id="view-pillars" class="module-view view-content hidden flex-col gap-6">
                 <div class="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
-                    <h2 class="text-lg font-bold text-brand-navy mb-1">4 Pilar Keberlanjutan Astra Desa Digital</h2>
+                    <h2 class="text-lg font-bold text-brand-navy mb-1">4 Pilar Keberlanjutan Desa Sejahtera Astra
+                        Digital</h2>
                     <p class="text-xs text-slate-500 mb-6">Indikator kinerja utama binaan CSR Astra International.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="pillars-container">
                         <!-- Pillars populated via JS -->
@@ -547,24 +556,20 @@
                     <div>
                         <label class="block text-xs font-bold text-brand-navy mb-1.5" for="add-category">Kategori /
                             Eyebrow</label>
-<input
-    type="text"
-    id="add-category"
-    name="category"
-    list="facility-categories"
-    placeholder="Contoh: Pemerintahan, Kesehatan, Pendidikan..."
-    class="w-full px-3 py-2 rounded-xl border border-surface-border text-xs font-semibold text-slate-800">
+                        <input type="text" id="add-category" name="category" list="facility-categories"
+                            placeholder="Contoh: Pemerintahan, Kesehatan, Pendidikan..."
+                            class="w-full px-3 py-2 rounded-xl border border-surface-border text-xs font-semibold text-slate-800">
 
-<datalist id="facility-categories">
-    <option value="Pemerintahan">
-    <option value="Kesehatan">
-    <option value="Pendidikan">
-    <option value="Lingkungan">
-    <option value="Ekonomi & UMKM">
-    <option value="Olahraga">
-    <option value="Keagamaan">
-    <option value="Sosial & Budaya">
-</datalist>
+                        <datalist id="facility-categories">
+                            <option value="Pemerintahan">
+                            <option value="Kesehatan">
+                            <option value="Pendidikan">
+                            <option value="Lingkungan">
+                            <option value="Ekonomi & UMKM">
+                            <option value="Olahraga">
+                            <option value="Keagamaan">
+                            <option value="Sosial & Budaya">
+                        </datalist>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-brand-navy mb-1.5" for="add-status">Status
@@ -581,7 +586,7 @@
                 <div>
                     <label class="block text-xs font-bold text-brand-navy mb-1.5" for="add-desc">Deskripsi
                         Singkat</label>
-                    <textarea id="add-desc" name="description" rows="2"
+                    <textarea id="add-desc" name="description" maxlength="255" rows="2"
                         placeholder="Uraikan penjelasan ringkas slide atau fasilitas..."
                         class="w-full px-3.5 py-2.5 rounded-xl border border-surface-border text-xs text-slate-700 resize-none">Sinergi kemitraan terpadu membina potensi desa dan memperkuat kemandirian warga.</textarea>
                 </div>
@@ -631,13 +636,14 @@
             </div>
 
             <!-- Edit Form Body -->
-            <form class="..." id="form-add-item" action="{{ route('admin.hero-slides.store') }}" method="POST"
-                enctype="multipart/form-data">
+            <form class="p-6 overflow-y-auto max-h-[calc(85vh-130px)] flex flex-col gap-4 text-xs font-body"
+                id="form-edit-item" method="POST" onsubmit="handleEditFormSubmit(event)" enctype="multipart/form-data">
 
                 @csrf
-                <input type="hidden" id="edit-item-id">
-                <input type="hidden" id="edit-item-module">
+                @method('PUT')
 
+                <input type="hidden" name="id" id="edit-item-id">
+                <input type="hidden" id="edit-item-module">
                 <!-- Photo Edit Section -->
                 <div>
                     <div class="flex items-center justify-between mb-2">
@@ -676,7 +682,7 @@
                 <div>
                     <label class="block text-xs font-bold text-brand-navy mb-1.5" for="edit-title">Judul Item <span
                             class="text-rose-500">*</span></label>
-                    <input type="text" id="edit-title" required
+                    <input type="text" id="edit-title" name="name" required
                         class="w-full px-3.5 py-2.5 rounded-xl border border-surface-border text-xs font-bold text-slate-800 focus:outline-none focus:border-brand-navy">
                 </div>
 
@@ -685,16 +691,16 @@
                     <div>
                         <label class="block text-xs font-bold text-brand-navy mb-1.5" for="edit-category">Kategori /
                             Sub-judul</label>
-                        <input type="text" id="edit-category"
+                        <input type="text" id="edit-category" name="category"
                             class="w-full px-3 py-2 rounded-xl border border-surface-border text-xs text-slate-800 focus:outline-none focus:border-brand-navy">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-brand-navy mb-1.5" for="edit-status">Status Publikasi
                             (Enable / Disable)</label>
-                        <select id="edit-status"
+                        <select id="edit-status" name="is_active"
                             class="w-full px-3 py-2 rounded-xl border border-surface-border text-xs font-bold text-slate-800">
-                            <option value="Aktif">Aktif (Tampil di Website)</option>
-                            <option value="Nonaktif">Nonaktif (Disembunyikan)</option>
+                            <option value="1">Aktif (Tampil di Website)</option>
+                            <option value="0">Nonaktif (Disembunyikan)</option>
                         </select>
                     </div>
                 </div>
@@ -703,7 +709,7 @@
                 <div>
                     <label class="block text-xs font-bold text-brand-navy mb-1.5" for="edit-desc">Uraian /
                         Keterangan</label>
-                    <textarea id="edit-desc" rows="3"
+                    <textarea id="edit-desc" name="short_description" rows="3"
                         class="w-full px-3.5 py-2 rounded-xl border border-surface-border text-xs text-slate-700 resize-none"></textarea>
                 </div>
 
@@ -752,11 +758,19 @@
 
     <!-- ================= JAVASCRIPT LOGIC (CRUD, MODAL, DISABLE/ENABLE, EDIT, PREVIEW) ================= -->
     <script>
-// Initial State Data
-const state = {
-    heroSlides: {{ \Illuminate\Support\Js::from($heroSlides) }},
+    // Initial State Data
+    const state = {
+        heroSlides: {
+            {
+                Illuminate\ Support\ Js::from($heroSlides)
+            }
+        },
 
-    facilities: {{ \Illuminate\Support\Js::from($facilitiesData) }},
+        facilities: {
+            {
+                Illuminate\ Support\ Js::from($facilitiesData)
+            }
+        },
 
 
         tourism: [{
@@ -824,38 +838,38 @@ const state = {
         document.getElementById('modal-delete-confirm').classList.remove('flex');
     }
 
-function openAddModal(type) {
-const modal = document.getElementById('modal-add-item');
-const form = document.getElementById('form-add-item');
+    function openAddModal(type) {
+        const modal = document.getElementById('modal-add-item');
+        const form = document.getElementById('form-add-item');
 
-modal.classList.remove('hidden');
-modal.classList.add('flex');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
 
-document.getElementById('add-title').value = '';
-document.getElementById('add-desc').value = '';
-document.getElementById('add-category').value = '';
-document.getElementById('add-status').value = '1';
+        document.getElementById('add-title').value = '';
+        document.getElementById('add-desc').value = '';
+        document.getElementById('add-category').value = '';
+        document.getElementById('add-status').value = '1';
 
-if (type === 'facility') {
-    form.action = "{{ route('admin.facilities.store') }}";
+        if (type === 'facility') {
+            form.action = "{{ route('admin.facilities.store') }}";
 
-    document.getElementById('add-title').name = 'name';
-    document.getElementById('add-desc').name = 'short_description';
+            document.getElementById('add-title').name = 'name';
+            document.getElementById('add-desc').name = 'short_description';
 
-    document.getElementById('modal-add-title').textContent =
-        'Tambah Fasilitas Baru';
+            document.getElementById('modal-add-title').textContent =
+                'Tambah Fasilitas Baru';
 
-} else if (type === 'slide') {
-    form.action = "{{ route('admin.hero-slides.store') }}";
+        } else if (type === 'slide') {
+            form.action = "{{ route('admin.hero-slides.store') }}";
 
-    document.getElementById('add-title').name = 'title';
-    document.getElementById('add-desc').name = 'description';
+            document.getElementById('add-title').name = 'title';
+            document.getElementById('add-desc').name = 'description';
 
-    document.getElementById('modal-add-title').textContent =
-        'Tambah Konten Baru - Slide Hero';
-}
+            document.getElementById('modal-add-title').textContent =
+                'Tambah Konten Baru - Slide Hero';
+        }
 
-}
+    }
 
     // Image preview from file upload
     function previewFile(event, previewId, urlInputId) {
@@ -1052,10 +1066,28 @@ if (type === 'facility') {
 
         document.getElementById('edit-item-id').value = item.id;
         document.getElementById('edit-item-module').value = module;
+        // Set update URL and field names based on module
+        const form = document.getElementById('form-edit-item');
+
+        if (module === 'facilities') {
+            form.action = "{{ route('admin.facilities.update', ':id') }}"
+                .replace(':id', id);
+
+            document.getElementById('edit-title').name = 'name';
+            document.getElementById('edit-desc').name = 'short_description';
+
+        } else if (module === 'heroSlides') {
+            form.action = "{{ route('admin.hero-slides.update', ':id') }}"
+                .replace(':id', id);
+
+            document.getElementById('edit-title').name = 'title';
+            document.getElementById('edit-desc').name = 'description';
+        }
         document.getElementById('edit-title').value = item.title;
         document.getElementById('edit-category').value = item.category || '';
         document.getElementById('edit-desc').value = item.description || '';
-        document.getElementById('edit-status').value = item.status || 'Aktif';
+        document.getElementById('edit-status').value =
+            item.status === 'Aktif' ? '1' : '0';
         document.getElementById('edit-img-preview').src = item.image;
         document.getElementById('edit-img-url').value = item.image;
         document.getElementById('edit-badge-type').textContent = module === 'heroSlides' ? 'Hero Slide' : module ===
@@ -1069,8 +1101,17 @@ if (type === 'facility') {
     // Handle Edit Submit
     function handleEditFormSubmit(e) {
         e.preventDefault();
-        const id = parseInt(document.getElementById('edit-item-id').value, 10);
+
         const module = document.getElementById('edit-item-module').value;
+
+        // Save Facilities changes to database
+        if (module === 'facilities' || module === 'heroSlides') {
+            HTMLFormElement.prototype.submit.call(e.target);
+            return;
+        }
+
+        // Keep the existing frontend behavior for other modules
+        const id = parseInt(document.getElementById('edit-item-id').value, 10);
         const item = state[module].find(x => x.id === id);
 
         if (item) {
@@ -1104,20 +1145,60 @@ if (type === 'facility') {
     }
 
     document.getElementById('btn-do-delete').addEventListener('click', function() {
-        if (itemToDelete) {
-            const {
-                module,
-                id,
-                title
-            } = itemToDelete;
-            state[module] = state[module].filter(x => x.id !== id);
-            closeAllModals();
-            showToast(`'${title}' telah dihapus dari sistem!`, 'warning');
-            if (module === 'heroSlides') renderHeroSlides();
-            if (module === 'facilities') renderFacilities();
-            if (module === 'tourism') renderTourism();
-            itemToDelete = null;
+        if (!itemToDelete) return;
+
+        const {
+            module,
+            id,
+            title
+        } = itemToDelete;
+
+        const deleteRoutes = {
+            heroSlides: "{{ route('admin.hero-slides.destroy', ':id') }}",
+            facilities: "{{ route('admin.facilities.destroy', ':id') }}"
+        };
+
+        // Delete real database records
+        if (deleteRoutes[module]) {
+            const form = document.createElement('form');
+
+            form.method = 'POST';
+            form.action = deleteRoutes[module].replace(':id', id);
+
+            const token = document.querySelector(
+                '#form-add-item input[name="_token"]'
+            ).value;
+
+            const csrf = document.createElement('input');
+            csrf.type = 'hidden';
+            csrf.name = '_token';
+            csrf.value = token;
+
+            const method = document.createElement('input');
+            method.type = 'hidden';
+            method.name = '_method';
+            method.value = 'DELETE';
+
+            form.appendChild(csrf);
+            form.appendChild(method);
+
+            document.body.appendChild(form);
+            form.submit();
+
+            return;
         }
+
+        // Temporary behavior for modules not connected to database yet
+        state[module] = state[module].filter(x => x.id !== id);
+
+        closeAllModals();
+        showToast(`'${title}' telah dihapus!`, 'warning');
+
+        if (module === 'heroSlides') renderHeroSlides();
+        if (module === 'facilities') renderFacilities();
+        if (module === 'tourism') renderTourism();
+
+        itemToDelete = null;
     });
 
     // Modular View Switching

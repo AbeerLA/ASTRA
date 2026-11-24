@@ -12,7 +12,7 @@
          style="background-color: #2D3091;">
 
         <h2 class="text-2xl font-bold mb-2">
-            Selamat Datang di Admin Panel ASTRA Desa Kepongpongan!
+            Selamat Datang di Admin Panel Desa Sejahtera Astra Kepongpongan!
         </h2>
 
         <p class="text-white/80">
