@@ -16,6 +16,8 @@ class TourismDestination extends Model
         'maps_url',
         'opening_hours',
         'entrance_fee',
+        'price_per_person',
+        'booking_contact',
         'sort_order',
         'is_active',
     ];
@@ -24,6 +26,7 @@ class TourismDestination extends Model
     {
         return [
             'entrance_fee' => 'decimal:2',
+            'price_per_person' => 'decimal:2',
             'sort_order' => 'integer',
             'is_active' => 'boolean',
         ];

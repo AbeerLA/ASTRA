@@ -3,10 +3,10 @@
         <div class="max-w-[1440px] mx-auto px-margin-mobile lg:px-margin">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-gutter pb-space-xl">
                 <div class="lg:col-span-2 flex flex-col gap-space-md">
-                    <div class="flex items-center gap-space-md"><img alt="Astra Desa Digital Logo"
-                            class="h-9 w-auto object-contain" src="{{ asset('images/LOGO SERA.png') }}"
+                    <div class="flex items-center gap-space-md font-title-md text-title-md text-primary font-bold "><img alt="Astra Desa Digital Logo"
+                            class="h-9 w-auto object-contain" src="{{ !empty($siteSettings['footer_logo']) ? asset('storage/' . $siteSettings['footer_logo']) : asset('images/LOGO SERA DARK.png') }}""
                             class="font-title-md text-title-md text-primary font-bold">Desa Sejahtera Astra
-                        Digital</span></div>
+                        Digital</div>
                     <p class="font-body-md text-body-md text-on-surface-variant max-w-md">Inisiatif transformasi digital
                         kolaboratif PT Astra International Tbk bersama Pemerintah Desa Kepongpongan, Kecamatan Talun,
                         Kabupaten Cirebon untuk mewujudkan tata kelola desa modern, pariwisata berdaya saing, dan

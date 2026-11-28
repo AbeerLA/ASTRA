@@ -43,8 +43,8 @@ class PillarController extends Controller
         Pillar::create($validated);
 
         return redirect()
-            ->route('admin.pillars.index')
-            ->with('success', 'Pillar created successfully.');
+    ->route('admin.dashboard')
+    ->with('success', 'Pillar created successfully.');
     }
 
     public function update(Request $request, Pillar $pillar)
@@ -77,9 +77,9 @@ class PillarController extends Controller
 
         $pillar->update($validated);
 
-        return redirect()
-            ->route('admin.pillars.index')
-            ->with('success', 'Pillar updated successfully.');
+return redirect()
+    ->route('admin.dashboard')
+    ->with('success', 'Pillar updated successfully.');
     }
 
     public function destroy(Pillar $pillar)
@@ -90,8 +90,8 @@ class PillarController extends Controller
 
         $pillar->delete();
 
-        return redirect()
-            ->route('admin.pillars.index')
-            ->with('success', 'Pillar deleted successfully.');
+return redirect()
+    ->route('admin.dashboard')
+    ->with('success', 'Pillar deleted successfully.');
     }
 }

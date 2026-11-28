@@ -10,13 +10,10 @@ use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
-    public function index()
-    {
-        $news = News::latest()->get();
-
-        return view('admin.news.index', compact('news'));
-    }
-
+public function index()
+{
+    return redirect()->route('admin.dashboard');
+}
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -43,7 +40,7 @@ class NewsController extends Controller
         News::create($validated);
 
         return redirect()
-            ->route('admin.news.index')
+            ->route('admin.dashboard')
             ->with('success', 'News article created successfully.');
     }
 
@@ -77,7 +74,7 @@ class NewsController extends Controller
         $news->update($validated);
 
         return redirect()
-            ->route('admin.news.index')
+            ->route('admin.dashboard')
             ->with('success', 'News article updated successfully.');
     }
 
@@ -90,7 +87,7 @@ class NewsController extends Controller
         $news->delete();
 
         return redirect()
-            ->route('admin.news.index')
+            ->route('admin.dashboard')
             ->with('success', 'News article deleted successfully.');
     }
 }

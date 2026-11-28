@@ -79,20 +79,9 @@
                     </div>
                 </div>
                 <!-- Carousel Controls (Bottom Right) -->
-                <div class="absolute bottom-6  lg:right-10 z-30 flex items-center gap-4">
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center justify-center gap-4">
                     <!-- Prev / Next Navigation Arrows -->
-                    <!-- Hero Navigation Arrows -->
-                    <button aria-label="Slide Sebelumnya"
-                        class="absolute left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 hover:bg-[#fc6c29] backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg active:scale-95 cursor-pointer opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-all duration-300"
-                        id="hero-prev-btn" type="button">
-                        <span class="material-symbols-outlined text-[28px]">chevron_left</span>
-                    </button>
 
-                    <button aria-label="Slide Selanjutnya"
-                        class="absolute right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 hover:bg-[#fc6c29] backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg active:scale-95 cursor-pointer opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-all duration-300"
-                        id="hero-next-btn" type="button">
-                        <span class="material-symbols-outlined text-[28px]">chevron_right</span>
-                    </button>
                     <!-- Pagination Dots -->
                     <div class="flex items-center gap-1.5 ml-2" id="hero-dots">
 

@@ -28,6 +28,8 @@ class TourismDestinationController extends Controller
             'maps_url' => 'nullable|url|max:255',
             'opening_hours' => 'nullable|string|max:255',
             'entrance_fee' => 'nullable|numeric|min:0',
+            'price_per_person' => 'required|numeric|min:0',
+            'booking_contact' => 'required|url|max:2048',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
         ]);
@@ -44,7 +46,7 @@ class TourismDestinationController extends Controller
         TourismDestination::create($validated);
 
         return redirect()
-            ->route('admin.tourism-destinations.index')
+            ->route('admin.dashboard')
             ->with('success', 'Tourism destination created successfully.');
     }
 
@@ -60,6 +62,8 @@ class TourismDestinationController extends Controller
             'maps_url' => 'nullable|url|max:255',
             'opening_hours' => 'nullable|string|max:255',
             'entrance_fee' => 'nullable|numeric|min:0',
+            'price_per_person' => 'required|numeric|min:0',
+            'booking_contact' => 'required|url|max:2048',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
         ]);
@@ -80,7 +84,7 @@ class TourismDestinationController extends Controller
         $tourismDestination->update($validated);
 
         return redirect()
-            ->route('admin.tourism-destinations.index')
+            ->route('admin.dashboard')
             ->with('success', 'Tourism destination updated successfully.');
     }
 
@@ -93,7 +97,7 @@ class TourismDestinationController extends Controller
         $tourismDestination->delete();
 
         return redirect()
-            ->route('admin.tourism-destinations.index')
+            ->route('admin.dashboard')
             ->with('success', 'Tourism destination deleted successfully.');
     }
 }

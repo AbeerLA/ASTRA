@@ -106,7 +106,7 @@
             <div class="p-5 border-b border-surface-border">
                 <div class="flex items-center gap-2.5">
 
-                    <img src="{{ asset('images/LOGO SERA.png') }}" alt="LOGO SERA"
+                    <img <img src="{{ !empty($siteSettings['admin_logo']) ? asset('storage/' . $siteSettings['admin_logo']) : asset('images/LOGO SERA DARK.png') }}"" alt="LOGO SERA"
                         class="h-7 w-auto object-contain shrink-0">
 
                     <div class="flex flex-col justify-center gap-0.5">
@@ -187,7 +187,9 @@
                         <span class="material-symbols-outlined text-[20px]">verified</span>
                         <span>4 Pilar Astra</span>
                     </div>
-                    <span class="text-[10px] font-bold bg-blue-50 text-brand-navy px-2 py-0.5 rounded-full">100%</span>
+                    <span class="text-[10px] font-bold bg-blue-50 text-brand-navy px-2 py-0.5 rounded-full">
+                        {{ $pillarsCount }}
+                    </span>
                 </button>
                 <button onclick="switchView('view-news')"
                     class="nav-item w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-slate-600 hover:bg-surface-hover hover:text-brand-navy font-medium text-sm transition-all"
@@ -209,8 +211,45 @@
                     <span class="text-[10px] font-bold bg-rose-50 text-rose-600 px-2 py-0.5 rounded-full"
                         id="badge-faq-count">2 Antre</span>
                 </button>
+                <button onclick="switchView('view-settings')"
+                    class="nav-item w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-slate-600 hover:bg-surface-hover hover:text-brand-navy font-medium text-sm transition-all"
+                    data-target="view-settings">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-[20px]">settings</span>
+                        <span>Pengaturan Website</span>
+                    </div>
+                </button>
             </nav>
         </div>
+
+<!-- Admin Account -->
+<div class="mt-auto p-4 border-t border-surface-border bg-white">
+            <div class="flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2 min-w-0">
+            <div class="w-9 h-9 rounded-full bg-blue-50 text-brand-navy flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined">admin_panel_settings</span>
+            </div>
+
+            <div class="min-w-0">
+                <p class="text-xs font-bold text-brand-navy truncate">
+                    {{ auth()->user()->name }}
+                </p>
+                <p class="text-[10px] text-slate-500 truncate">
+                    Administrator
+                </p>
+            </div>
+        </div>
+
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit"
+                class="p-2 rounded-lg text-slate-500 hover:bg-red-50 hover:text-red-600 transition"
+                title="Logout">
+                <span class="material-symbols-outlined text-[20px]">logout</span>
+            </button>
+        </form>
+    </div>
+</div>
 
         <!-- Status Bar -->
         <div class="p-3 border-t border-surface-border bg-slate-50/70">
@@ -238,11 +277,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-4">
-                <button onclick="openAddModal('slide')"
-                    class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-brand-navy hover:bg-brand-navy-dark text-white text-xs font-bold transition-all shadow-sm">
-                    <span class="material-symbols-outlined text-[16px]">add</span>
-                    <span> Tambah Konten Baru</span>
-                </button>
+
                 <div class="h-6 w-px bg-slate-200"></div>
                 <div class="flex items-center gap-3">
                     <div class="text-right">
@@ -397,7 +432,7 @@
                             <p class="text-xs text-slate-500 mt-0.5">Kelola wahana BUMDes, tarif tiket, kuota harian,
                                 serta tombol aktif/nonaktifkan.</p>
                         </div>
-                        <button onclick="openAddModal('tourism')"
+                        <button type="button" onclick="openTourismModal()"
                             class="px-4 py-2 rounded-lg bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
                             <span class="material-symbols-outlined text-[18px]">add_location_alt</span>
                             <span> Tambah Paket Wisata</span>
@@ -413,17 +448,297 @@
 
             <!-- ================= VIEW 5: PAKET ROMBONGAN ================= -->
 
-            <!-- ================= VIEW 6: 4 PILAR ASTRA ================= -->
-            <div id="view-pillars" class="module-view view-content hidden flex-col gap-6">
-                <div class="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
-                    <h2 class="text-lg font-bold text-brand-navy mb-1">4 Pilar Keberlanjutan Desa Sejahtera Astra
-                        Digital</h2>
-                    <p class="text-xs text-slate-500 mb-6">Indikator kinerja utama binaan CSR Astra International.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="pillars-container">
-                        <!-- Pillars populated via JS -->
-                    </div>
+ <!-- ================= VIEW 6: 4 PILAR ASTRA ================= -->
+<div id="view-pillars" class="module-view view-content hidden flex-col gap-6">
+    <div class="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
+
+        <!-- Section Header -->
+        <div class="flex items-center justify-between mb-5 pb-4 border-b border-surface-border">
+            <div>
+                <h2 class="text-lg font-bold text-brand-navy mb-1">
+                    4 Pilar Keberlanjutan Desa Sejahtera Astra Digital
+                </h2>
+                <p class="text-xs text-slate-500">
+                    Indikator kinerja utama binaan CSR Astra International.
+                </p>
+            </div>
+
+            <button type="button" onclick="openPillarModal()"
+                class="px-4 py-2 rounded-lg bg-brand-navy hover:bg-brand-navy-dark text-white text-xs font-bold flex items-center gap-1.5 transition-all">
+                <span class="material-symbols-outlined text-[18px]">add</span>
+                <span>Tambah Pilar Baru</span>
+            </button>
+        </div>
+
+        <!-- Pillars Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="pillars-container">
+            <!-- Pillars populated via JS -->
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= PILLAR ADD MODAL ================= -->
+<div id="modal-pillar"
+    class="fixed inset-0 z-50 items-center justify-center p-4 sm:p-6 overflow-y-auto hidden">
+
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm"
+        onclick="closePillarModal()"></div>
+
+    <div class="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl z-10 flex flex-col my-auto">
+
+        <!-- Header -->
+        <div class="px-6 py-5 border-b border-surface-border flex items-center justify-between">
+            <div>
+                <h3 class="text-base font-bold text-brand-navy">
+                    Tambah Pilar Baru
+                </h3>
+                <p class="text-xs text-slate-500 mt-1">
+                    Lengkapi informasi pilar keberlanjutan Astra.
+                </p>
+            </div>
+
+            <button type="button" onclick="closePillarModal()"
+                class="p-1.5 text-slate-400 hover:text-slate-700">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <!-- Form -->
+        <form action="{{ route('admin.pillars.store') }}"
+            method="POST"
+            enctype="multipart/form-data"
+            class="p-6 overflow-y-auto max-h-[70vh] flex flex-col gap-4">
+
+            @csrf
+
+            <!-- Name & Category -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Nama Pilar *</label>
+                    <input type="text" name="name" required
+                        class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Kategori</label>
+                    <input type="text" name="category"
+                        class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
                 </div>
             </div>
+
+            <!-- Short Description -->
+            <div>
+                <label class="block text-xs font-bold mb-1.5">Deskripsi Singkat</label>
+                <textarea name="short_description" maxlength="255" rows="2"
+                    class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs"></textarea>
+            </div>
+
+            <!-- Full Description -->
+            <div>
+                <label class="block text-xs font-bold mb-1.5">Deskripsi Lengkap</label>
+                <textarea name="description" rows="4"
+                    class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs"></textarea>
+            </div>
+
+            <!-- Icon -->
+            <div>
+                <label class="block text-xs font-bold mb-1.5">Material Icon Name</label>
+                <input type="text" name="icon"
+                    class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+            </div>
+
+            <!-- Cover Image -->
+            <div>
+                <label class="block text-xs font-bold text-brand-navy mb-2">
+                    Cover Image
+                </label>
+                <input type="file" name="image" accept="image/*"
+                    class="w-full text-xs">
+                <p class="text-[11px] text-slate-400 mt-1">
+                    JPG, PNG, atau WEBP. Maksimal 5 MB.
+                </p>
+            </div>
+
+            <!-- Activities -->
+            <div>
+                <label class="block text-xs font-bold mb-1.5">Activities</label>
+                <textarea name="activities" rows="3"
+                    class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs"></textarea>
+            </div>
+
+            <!-- Achievements -->
+            <div>
+                <label class="block text-xs font-bold mb-1.5">Achievements</label>
+                <textarea name="achievements" rows="3"
+                    class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs"></textarea>
+            </div>
+
+            <!-- Sort Order & Status -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Sort Order</label>
+                    <input type="number" name="sort_order" value="0" min="0"
+                        class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Status</label>
+                    <label class="flex items-center gap-2 h-[38px]">
+                        <input type="checkbox" name="is_active" value="1" checked>
+                        <span class="text-xs">Active</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="pt-4 border-t border-surface-border flex justify-end gap-2">
+                <button type="button" onclick="closePillarModal()"
+                    class="px-4 py-2 rounded-lg border border-surface-border text-xs font-semibold">
+                    Batal
+                </button>
+
+                <button type="submit"
+                    class="px-5 py-2 bg-brand-orange text-white rounded-lg text-xs font-bold">
+                    Simpan Pilar
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+            <!-- ================= PILLAR EDIT MODAL ================= -->
+<div id="modal-edit-pillar"
+    class="fixed inset-0 z-50 items-center justify-center p-4 sm:p-6 overflow-y-auto hidden">
+
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm"
+        onclick="closePillarEditModal()"></div>
+
+    <div class="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl z-10 flex flex-col my-auto">
+
+        <!-- Header -->
+        <div class="px-6 py-5 border-b border-surface-border flex items-center justify-between">
+            <div>
+                <h3 class="text-base font-bold text-brand-navy">Edit Sustainability Pillar</h3>
+                <p class="text-xs text-slate-500 mt-1">Perbarui informasi pilar keberlanjutan Astra.</p>
+            </div>
+
+            <button type="button" onclick="closePillarEditModal()"
+                class="p-1.5 text-slate-400 hover:text-slate-700">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <!-- Form -->
+        <form id="form-edit-pillar" method="POST" enctype="multipart/form-data"
+            class="p-6 overflow-y-auto max-h-[70vh] flex flex-col gap-4">
+
+            @csrf
+            @method('PUT')
+
+            <!-- Name & Category -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Nama Pilar *</label>
+                    <input type="text" name="name" id="edit-pillar-name" required
+                        class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Kategori</label>
+                    <input type="text" name="category" id="edit-pillar-category"
+                        class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                </div>
+            </div>
+
+            <!-- Short Description -->
+            <div>
+                <label class="block text-xs font-bold mb-1.5">Deskripsi Singkat</label>
+                <textarea name="short_description" id="edit-pillar-short-description"
+                    maxlength="255" rows="2"
+                    class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs"></textarea>
+            </div>
+
+            <!-- Full Description -->
+            <div>
+                <label class="block text-xs font-bold mb-1.5">Deskripsi Lengkap</label>
+                <textarea name="description" id="edit-pillar-description" rows="4"
+                    class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs"></textarea>
+            </div>
+
+            <!-- Icon -->
+            <div>
+                <label class="block text-xs font-bold mb-1.5">Material Icon Name</label>
+                <input type="text" name="icon" id="edit-pillar-icon"
+                    class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+            </div>
+
+            <!-- Current Image -->
+            <div>
+                <label class="block text-xs font-bold mb-2">Cover Image</label>
+
+                <img id="edit-pillar-image-preview"
+                    src="https://placehold.co/800x450?text=No+Image"
+                    class="w-full h-44 object-cover rounded-xl border border-surface-border mb-2">
+
+                <input type="file" name="image" accept="image/jpeg,image/png,image/webp"
+                    class="w-full text-xs">
+                <p class="text-[11px] text-slate-400 mt-1">
+                    JPG, PNG, atau WEBP. Maksimal 5 MB. Kosongkan jika tidak ingin mengganti foto.
+                </p>
+            </div>
+
+            <!-- Activities -->
+            <div>
+                <label class="block text-xs font-bold mb-1.5">Activities</label>
+                <textarea name="activities" id="edit-pillar-activities" rows="3"
+                    class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs"></textarea>
+            </div>
+
+            <!-- Achievements -->
+            <div>
+                <label class="block text-xs font-bold mb-1.5">Achievements</label>
+                <textarea name="achievements" id="edit-pillar-achievements" rows="3"
+                    class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs"></textarea>
+            </div>
+
+            <!-- Sort Order & Status -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Sort Order</label>
+                    <input type="number" name="sort_order" id="edit-pillar-sort-order"
+                        min="0"
+                        class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Status</label>
+                    <label class="flex items-center gap-2 h-[38px]">
+                        <input type="checkbox" name="is_active" value="1"
+                            id="edit-pillar-is-active">
+                        <span class="text-xs">Active</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="pt-4 border-t border-surface-border flex justify-end gap-2">
+                <button type="button" onclick="closePillarEditModal()"
+                    class="px-4 py-2 rounded-lg border border-surface-border text-xs font-semibold">
+                    Batal
+                </button>
+
+                <button type="submit"
+                    class="px-5 py-2 bg-brand-orange text-white rounded-lg text-xs font-bold">
+                    Simpan Perubahan
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
 
             <!-- ================= VIEW 7: KABAR & AGENDA ================= -->
             <div id="view-news" class="module-view view-content hidden flex-col gap-6">
@@ -434,7 +749,7 @@
                             <p class="text-xs text-slate-500">Artikel kegiatan, musrenbang desa, dan siaran pers kuwu.
                             </p>
                         </div>
-                        <button onclick="openAddModal('news')"
+                        <button onclick="openNewsAddModal()"
                             class="px-4 py-2 rounded-lg bg-brand-navy hover:bg-brand-navy-dark text-white text-xs font-bold flex items-center gap-1.5">
                             <span class="material-symbols-outlined text-[18px]">edit_note</span>
                             <span> Tulis Berita</span>
@@ -461,6 +776,96 @@
                     </div>
                 </div>
             </div>
+
+<!-- ================= VIEW 9: WEBSITE SETTINGS ================= -->
+<div id="view-settings" class="module-view view-content hidden flex-col gap-6">
+
+    <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+
+        <div class="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
+
+            <div class="mb-6 pb-4 border-b border-surface-border">
+                <h2 class="text-lg font-bold text-brand-navy">
+                    Pengaturan Website
+                </h2>
+                <p class="text-xs text-slate-500 mt-1">
+                    Kelola logo Header, Footer, dan Admin Dashboard.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- HEADER LOGO -->
+                <div class="border border-surface-border rounded-xl p-5">
+                    <h3 class="font-bold text-brand-navy mb-3">Header Logo</h3>
+
+                    <div class="h-32 bg-slate-50 rounded-lg flex items-center justify-center mb-4">
+                        <img id="preview-header"
+                            src="{{ !empty($settings['header_logo']) ? asset('storage/' . $settings['header_logo']) : asset('images/LOGO SERA.png') }}"
+                            class="max-h-20 max-w-full object-contain">
+                    </div>
+
+                    <label class="block text-xs font-semibold text-slate-600 mb-2">
+                        Choose Header Logo
+                    </label>
+
+                    <input type="file" name="header_logo" accept="image/png,image/jpeg,image/webp"
+                        onchange="previewLogo(event, 'preview-header')"
+                        class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-blue-50 file:text-brand-navy file:font-semibold">
+                </div>
+
+                <!-- FOOTER LOGO -->
+                <div class="border border-surface-border rounded-xl p-5">
+                    <h3 class="font-bold text-brand-navy mb-3">Footer Logo</h3>
+
+                    <div class="h-32 bg-slate-50 rounded-lg flex items-center justify-center mb-4">
+                        <img id="preview-footer"
+                            src="{{ !empty($settings['footer_logo']) ? asset('storage/' . $settings['footer_logo']) : asset('images/LOGO SERA DARK.png') }}"
+                            class="max-h-20 max-w-full object-contain">
+                    </div>
+
+                    <label class="block text-xs font-semibold text-slate-600 mb-2">
+                        Choose Footer Logo
+                    </label>
+
+                    <input type="file" name="footer_logo" accept="image/png,image/jpeg,image/webp"
+                        onchange="previewLogo(event, 'preview-footer')"
+                        class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-blue-50 file:text-brand-navy file:font-semibold">
+                </div>
+
+                <!-- ADMIN LOGO -->
+                <div class="border border-surface-border rounded-xl p-5">
+                    <h3 class="font-bold text-brand-navy mb-3">Admin Dashboard Logo</h3>
+
+                    <div class="h-32 bg-slate-50 rounded-lg flex items-center justify-center mb-4">
+                        <img id="preview-admin"
+                            src="{{ !empty($settings['admin_logo']) ? asset('storage/' . $settings['admin_logo']) : asset('images/LOGO SERA DARK.png') }}"
+                            class="max-h-20 max-w-full object-contain">
+                    </div>
+
+                    <label class="block text-xs font-semibold text-slate-600 mb-2">
+                        Choose Admin Logo
+                    </label>
+
+                    <input type="file" name="admin_logo" accept="image/png,image/jpeg,image/webp"
+                        onchange="previewLogo(event, 'preview-admin')"
+                        class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-blue-50 file:text-brand-navy file:font-semibold">
+                </div>
+
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-surface-border flex justify-end">
+                <button type="submit"
+                    class="px-6 py-2.5 rounded-lg bg-brand-orange hover:bg-brand-orange-hover text-white text-sm font-bold transition-all shadow-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">save</span>
+                    Save Changes
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
 
         </main>
     </div>
@@ -726,7 +1131,368 @@
             </form>
         </div>
     </div>
+    <!-- =========================================================
+     MODAL: TAMBAH / EDIT DESTINASI WISATA
+========================================================= -->
+    <div id="modal-tourism" class="fixed inset-0 z-50 items-center justify-center p-4 sm:p-6 overflow-y-auto hidden">
 
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeAllModals()"></div>
+
+        <div class="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl z-10 flex flex-col my-auto">
+
+            <!-- Header -->
+            <div class="px-6 py-5 border-b border-surface-border flex items-center justify-between">
+                <div>
+                    <h3 id="tourism-modal-title" class="text-base font-bold text-brand-navy">
+                        Tambah Destinasi Wisata
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-1">
+                        Lengkapi informasi destinasi dan reservasi tiket.
+                    </p>
+                </div>
+
+                <button type="button" onclick="closeAllModals()" class="p-1.5 text-slate-400 hover:text-slate-700">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <!-- Form -->
+            <form id="form-tourism" action="{{ route('admin.tourism-destinations.store') }}" method="POST"
+                enctype="multipart/form-data" class="p-6 overflow-y-auto max-h-[70vh] flex flex-col gap-4">
+
+                @csrf
+
+                <input type="hidden" name="_method" id="tourism-form-method" value="">
+                <input type="hidden" id="tourism-destination-id">
+
+                <!-- Image -->
+                <div>
+                    <label class="block text-xs font-bold text-brand-navy mb-2">
+                        Foto Destinasi
+                    </label>
+
+                    <div class="relative h-44 rounded-xl border-2 border-dashed border-slate-300 overflow-hidden">
+                        <img id="tourism-image-preview" src="https://placehold.co/800x450?text=Destination+Image"
+                            class="w-full h-full object-cover">
+
+                        <label
+                            class="absolute inset-0 flex items-center justify-center bg-slate-900/40 opacity-0 hover:opacity-100 cursor-pointer transition-opacity">
+                            <span class="text-white text-xs font-bold">
+                                Pilih Foto
+                            </span>
+                            <input type="file" id="tourism-image" name="image" accept="image/jpeg,image/png,image/webp"
+                                class="hidden" onchange="previewFile(event, 'tourism-image-preview')">
+                        </label>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1">
+                        JPG, PNG, atau WEBP. Maksimal 5 MB.
+                    </p>
+                </div>
+
+                <!-- Name & Category -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5">Nama Destinasi *</label>
+                        <input type="text" name="name" id="tourism-name" required maxlength="150"
+                            class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5">Kategori</label>
+                        <input type="text" name="category" id="tourism-category"
+                            class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                    </div>
+                </div>
+
+                <!-- Short Description -->
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Deskripsi Singkat</label>
+                    <textarea name="short_description" id="tourism-short-description" maxlength="255" rows="2"
+                        class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs"></textarea>
+                </div>
+
+                <!-- Full Description -->
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Deskripsi Lengkap</label>
+                    <textarea name="description" id="tourism-description" rows="4"
+                        class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs"></textarea>
+                </div>
+
+                <!-- Address -->
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Alamat</label>
+                    <input type="text" name="address" id="tourism-address"
+                        class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                </div>
+
+                <!-- Maps & Opening Hours -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5">Google Maps URL</label>
+                        <input type="url" name="maps_url" id="tourism-maps-url"
+                            class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5">Jam Operasional</label>
+                        <input type="text" name="opening_hours" id="tourism-opening-hours" placeholder="08:00 - 17:00"
+                            class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                    </div>
+                </div>
+
+                <!-- Prices -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5">Harga Tiket Masuk</label>
+                        <input type="number" name="entrance_fee" id="tourism-entrance-fee" min="0" step="0.01"
+                            class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5">Harga Reservasi / Orang *</label>
+                        <input type="number" name="price_per_person" id="tourism-price" min="0" step="0.01" required
+                            class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                    </div>
+                </div>
+
+                <!-- Google Form -->
+                <div>
+                    <label class="block text-xs font-bold mb-1.5">Google Form Reservasi *</label>
+                    <input type="url" name="booking_contact" id="tourism-booking-contact"
+                        placeholder="https://forms.google.com/..." required
+                        class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                </div>
+
+                <!-- Sort Order & Status -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5">Urutan Tampilan</label>
+                        <input type="number" name="sort_order" id="tourism-sort-order" min="0" value="0"
+                            class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5">Status</label>
+                        <select name="is_active" id="tourism-status"
+                            class="w-full px-3 py-2.5 rounded-lg border border-surface-border text-xs">
+                            <option value="1">Aktif</option>
+                            <option value="0">Nonaktif</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="pt-4 border-t border-surface-border flex justify-end gap-2">
+                    <button type="button" onclick="closeAllModals()"
+                        class="px-4 py-2 rounded-lg border border-surface-border text-xs font-semibold">
+                        Batal
+                    </button>
+
+                    <button type="submit" class="px-5 py-2 rounded-lg bg-brand-orange text-white text-xs font-bold">
+                        Simpan Destinasi
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= NEWS ADD MODAL ================= -->
+<div id="modal-news-add"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
+
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl my-auto">
+
+        <div class="p-6 border-b border-surface-border flex justify-between items-center">
+            <div>
+                <h2 class="text-lg font-bold text-brand-navy">Tulis Berita Baru</h2>
+                <p class="text-xs text-slate-500">Tambahkan artikel atau agenda desa.</p>
+            </div>
+
+            <button type="button" onclick="closeAllModals()"
+                class="text-slate-400 hover:text-rose-500 text-xl">✕</button>
+        </div>
+
+        <form action="{{ route('admin.news.store') }}" method="POST"
+            enctype="multipart/form-data" class="p-6 space-y-4">
+
+            @csrf
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Judul Berita *</label>
+                <input type="text" name="title" required
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Slug</label>
+                <input type="text" name="slug"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm"
+                    placeholder="Otomatis dari judul jika kosong">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Kategori</label>
+                <input type="text" name="category"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm"
+                    placeholder="Contoh: Kegiatan Desa">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Ringkasan</label>
+                <textarea name="excerpt" rows="2"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Isi Berita *</label>
+                <textarea name="content" rows="6" required
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Gambar Berita</label>
+                <input type="file" name="image" accept="image/*"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Penulis</label>
+                <input type="text" name="author"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Tanggal Publikasi</label>
+                <input type="datetime-local" name="published_at"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Status *</label>
+                <select name="status" required
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                    <option value="scheduled">Scheduled</option>
+                </select>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-surface-border">
+                <button type="button" onclick="closeAllModals()"
+                    class="px-5 py-2 rounded-lg border text-xs font-bold">
+                    Batal
+                </button>
+
+                <button type="submit"
+                    class="px-5 py-2 rounded-lg bg-brand-navy text-white text-xs font-bold">
+                    Simpan Berita
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<!-- ================= NEWS EDIT MODAL ================= -->
+<div id="modal-news-edit"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
+
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl my-auto">
+
+        <div class="p-6 border-b border-surface-border flex justify-between items-center">
+            <div>
+                <h2 class="text-lg font-bold text-brand-navy">Edit Berita</h2>
+                <p class="text-xs text-slate-500">Perbarui informasi artikel.</p>
+            </div>
+
+            <button type="button" onclick="closeAllModals()"
+                class="text-slate-400 hover:text-rose-500 text-xl">✕</button>
+        </div>
+
+        <form id="form-news-edit" method="POST"
+            enctype="multipart/form-data" class="p-6 space-y-4">
+
+            @csrf
+            @method('PUT')
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Judul Berita *</label>
+                <input id="news-edit-title" type="text" name="title" required
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Slug</label>
+                <input id="news-edit-slug" type="text" name="slug"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Kategori</label>
+                <input id="news-edit-category" type="text" name="category"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Ringkasan</label>
+                <textarea id="news-edit-excerpt" name="excerpt" rows="2"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Isi Berita *</label>
+                <textarea id="news-edit-content" name="content" rows="6" required
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Gambar Baru (Opsional)</label>
+                <img id="news-edit-preview" src=""
+                    class="w-40 h-24 object-cover rounded-lg mb-2">
+
+                <input id="news-edit-image" type="file" name="image" accept="image/*"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Penulis</label>
+                <input id="news-edit-author" type="text" name="author"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Tanggal Publikasi</label>
+                <input id="news-edit-published" type="datetime-local" name="published_at"
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold mb-1">Status *</label>
+                <select id="news-edit-status" name="status" required
+                    class="w-full border border-surface-border rounded-lg p-3 text-sm">
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                    <option value="scheduled">Scheduled</option>
+                </select>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-surface-border">
+                <button type="button" onclick="closeAllModals()"
+                    class="px-5 py-2 rounded-lg border text-xs font-bold">
+                    Batal
+                </button>
+
+                <button type="submit"
+                    class="px-5 py-2 rounded-lg bg-brand-navy text-white text-xs font-bold">
+                    Perbarui Berita
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
     <!-- ====================================================================
        MODAL 3: KONFIRMASI HAPUS INTERAKTIF (DELETE DIALOG)
        ==================================================================== -->
@@ -758,50 +1524,14 @@
 
     <!-- ================= JAVASCRIPT LOGIC (CRUD, MODAL, DISABLE/ENABLE, EDIT, PREVIEW) ================= -->
     <script>
-    // Initial State Data
-    const state = {
-        heroSlides: {
-            {
-                Illuminate\ Support\ Js::from($heroSlides)
-            }
-        },
-
-        facilities: {
-            {
-                Illuminate\ Support\ Js::from($facilitiesData)
-            }
-        },
-
-
-        tourism: [{
-                id: 1,
-                title: "Wisata Tubing Sungai Cipager",
-                category: "Petualangan & Alam",
-                description: "Menyusuri riam sungai jernih 1,8 km dengan pemandu bersertifikasi dan bilas air hangat.",
-                price: "Rp 45.000 / pax",
-                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBTWGLtm9YY6ef35Y2t5ZCoAr2v4AvWilPXOSaT9ORujaQZsUrqLg4Acv7RUTvcp-DiN2ZhxtehuOGbu7oW1b0M7mvr5Hm-sHYc0LHSSTXL4tBvGQukE5qirWPu8GYaKDTrOSjLRvn5cn_r0S1OWMbgy0X1jXLCNmoyb2jJnpuAhvvkJRS8IM7e5z1eGLCY2sQsK-8nQLbNhqPHtsXbbfVy7kEdCJgBMEHMH_2e8mI",
-                status: "Aktif"
-            },
-            {
-                id: 2,
-                title: "Kampoeng Edukasi Batik & Nila",
-                category: "Edukasi & Budaya",
-                description: "Pengalaman langsung mencanting kain batik mori pewarna alami ramah lingkungan.",
-                price: "Rp 35.000 / pax",
-                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAJWzkm1ux4cEhnVNvBMX2jTbEtCaY0IZiqZHUlO-QvNqS_NchrRPCUcJ7CuQc7hjrkVdQEobviPstR5JuesXMOF7ARcw2DQcFB5gtP3vo6ML2RIChn9hOjp-vSWv7gIWNQAcr9cUfrRQxm-Wyo1g2Qvcsiz_pzQ3wNbdAgg9IHO480vszcwOcG_K3D-SOxD_cQxzF2G0WbCS_oXf1J_PEh_SAC8vMc9GoXg9gkQQ4",
-                status: "Aktif"
-            },
-            {
-                id: 3,
-                title: "Taman Agrowisata Buah & Sayur",
-                category: "Agrowisata",
-                description: "Sensasi petik langsung mangga gedong gincu dan melon hidroponik di saung kuliner.",
-                price: "Rp 25.000 / pax",
-                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBmtM7W4-7SSR0XF299XwjsHpM-nzxQ2oVQGbXpJQ1OksFCisP6d825U6HFQaY-642yjX9giri83oSKT9LFdylJdigQZyrR9RQefZaQkx-9y53OxDWQMitUKGEwaIqoz5MrV7zeKdj7DjXKlebUvmr60cuIU1G87DBS6kCiL9SV-zBLCVVsBrLsT1ruluUJ9gENjUbZy2YBMxmwzxu27CL4Ah8BnKvdeIQWUdPwtZY",
-                status: "Aktif"
-            }
-        ]
-    };
+// Initial State Data
+const state = {
+    heroSlides: {{ Illuminate\Support\Js::from($heroSlides) }},
+    facilities: {{ Illuminate\Support\Js::from($facilitiesData) }},
+    tourism: {{ Illuminate\Support\Js::from($destinationsData) }},
+    pillars: {{ Illuminate\Support\Js::from($pillarsData) }},
+    news: {{ Illuminate\Support\Js::from($newsData) }}
+};
 
     let itemToDelete = null;
 
@@ -829,14 +1559,25 @@
     }
 
     // Modal Control
-    function closeAllModals() {
-        document.getElementById('modal-add-item').classList.add('hidden');
-        document.getElementById('modal-add-item').classList.remove('flex');
-        document.getElementById('modal-edit-item').classList.add('hidden');
-        document.getElementById('modal-edit-item').classList.remove('flex');
-        document.getElementById('modal-delete-confirm').classList.add('hidden');
-        document.getElementById('modal-delete-confirm').classList.remove('flex');
-    }
+function closeAllModals() {
+    const modalIds = [
+        'modal-add-item',
+        'modal-edit-item',
+        'modal-delete-confirm',
+        'modal-tourism',
+        'modal-news-add',
+        'modal-news-edit'
+    ];
+
+    modalIds.forEach(id => {
+        const modal = document.getElementById(id);
+
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    });
+}
 
     function openAddModal(type) {
         const modal = document.getElementById('modal-add-item');
@@ -872,6 +1613,76 @@
     }
 
     // Image preview from file upload
+    // Open Add Tourism Modal
+    function openTourismModal() {
+        const form = document.getElementById('form-tourism');
+
+        form.reset();
+        form.action = "{{ route('admin.tourism-destinations.store') }}";
+
+        document.getElementById('tourism-form-method').disabled = true;
+        document.getElementById('tourism-destination-id').value = '';
+
+        document.getElementById('tourism-modal-title').textContent =
+            'Tambah Destinasi Wisata';
+
+        document.getElementById('tourism-image-preview').src =
+            'https://placehold.co/800x450?text=Destination+Image';
+
+        document.getElementById('tourism-status').value = '1';
+        document.getElementById('tourism-sort-order').value = '0';
+
+        document.getElementById('modal-tourism').classList.remove('hidden');
+        document.getElementById('modal-tourism').classList.add('flex');
+    }
+
+
+    // Open Edit Tourism Modal
+    function openTourismEditModal(id) {
+        const item = state.tourism.find(tour => Number(tour.id) === Number(id));
+
+        if (!item) {
+            showToast('Destinasi tidak ditemukan!', 'warning');
+            return;
+        }
+
+        const form = document.getElementById('form-tourism');
+
+        form.action = "{{ route('admin.tourism-destinations.update', ':id') }}"
+            .replace(':id', id);
+
+        const methodInput = document.getElementById('tourism-form-method');
+        methodInput.disabled = false;
+        methodInput.value = 'PUT';
+
+        document.getElementById('tourism-destination-id').value = item.id;
+
+        document.getElementById('tourism-modal-title').textContent =
+            'Edit Destinasi Wisata';
+
+        document.getElementById('tourism-name').value = item.title || '';
+        document.getElementById('tourism-category').value = item.category || '';
+        document.getElementById('tourism-short-description').value = item.description || '';
+        document.getElementById('tourism-description').value = item.full_description || '';
+        document.getElementById('tourism-address').value = item.address || '';
+        document.getElementById('tourism-maps-url').value = item.maps_url || '';
+        document.getElementById('tourism-opening-hours').value = item.opening_hours || '';
+        document.getElementById('tourism-entrance-fee').value = item.entrance_fee || '';
+        document.getElementById('tourism-price').value = item.price_per_person || '';
+        document.getElementById('tourism-booking-contact').value = item.booking_contact || '';
+        document.getElementById('tourism-sort-order').value = item.sort_order ?? 0;
+        document.getElementById('tourism-status').value = item.is_active ? '1' : '0';
+
+        document.getElementById('tourism-image-preview').src =
+            item.image || 'https://placehold.co/800x450?text=Destination+Image';
+
+        // Reset file input so the existing image remains unless a new one is selected
+        document.getElementById('tourism-image').value = '';
+
+        document.getElementById('modal-tourism').classList.remove('hidden');
+        document.getElementById('modal-tourism').classList.add('flex');
+    }
+
     function previewFile(event, previewId, urlInputId) {
         const file = event.target.files[0];
 
@@ -1032,7 +1843,7 @@
               ● ${tour.status}
             </button>
             <div class="flex items-center gap-1">
-              <button type="button" onclick="openEditModal('tourism', ${tour.id})" class="p-1.5 text-brand-navy hover:bg-surface-hover rounded-lg">
+              <button type="button" onclick="openTourismEditModal(${tour.id})" class="p-1.5 text-brand-navy hover:bg-surface-hover rounded-lg">
                 <span class="material-symbols-outlined text-[18px]">edit</span>
               </button>
               <button type="button" onclick="confirmDelete('tourism', ${tour.id}, '${tour.title}')" class="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg">
@@ -1043,9 +1854,297 @@
         `;
             container.appendChild(card);
         });
-        document.getElementById('badge-tour-count').textContent = `${state.tourism.length} Paket`;
+        document.getElementById('badge-tour-count').textContent = `${state.tourism.length} Destinasi`;
         document.getElementById('kpi-tour-count').textContent = state.tourism.length;
     }
+// Render Sustainability Pillars
+function renderPillars() {
+    const container = document.getElementById('pillars-container');
+
+    container.innerHTML = '';
+
+    state.pillars.forEach((pillar) => {
+        const isActive = pillar.is_active;
+
+        const card = document.createElement('div');
+
+        card.className = `
+            p-4 rounded-xl border
+            ${isActive
+                ? 'border-surface-border bg-white'
+                : 'border-dashed border-slate-300 bg-slate-50'}
+            shadow-sm flex flex-col justify-between
+        `;
+
+        card.innerHTML = `
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-brand-orange">
+                        ${pillar.number}
+                    </span>
+
+                    <span class="material-symbols-outlined text-brand-navy text-2xl">
+                        ${pillar.icon || 'category'}
+                    </span>
+                </div>
+
+                <h3 class="font-bold text-sm text-brand-navy">
+                    ${pillar.title}
+                </h3>
+
+                <p class="text-[11px] text-slate-500 mt-2">
+                    ${pillar.description || ''}
+                </p>
+
+                <div class="mt-3 p-2 rounded-lg bg-slate-50">
+                    <p class="text-[11px] font-semibold text-brand-navy">
+                        ${pillar.achievements || 'Belum ada pencapaian'}
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-surface-border flex items-center justify-between">
+
+                <span class="text-xs font-bold ${
+                    isActive ? 'text-emerald-700' : 'text-slate-500'
+                }">
+                    ${pillar.status}
+                </span>
+
+                <div class="flex items-center gap-1">
+
+                    <button type="button"
+                        onclick="openPillarEditModal(${pillar.id})"
+                        class="p-1.5 text-brand-navy hover:bg-surface-hover rounded-lg">
+                        <span class="material-symbols-outlined text-[18px]">edit</span>
+                    </button>
+
+                    <button type="button"
+                        onclick="confirmDelete('pillars', ${pillar.id}, '${pillar.title}')"
+                        class="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg">
+                        <span class="material-symbols-outlined text-[18px]">delete</span>
+                    </button>
+
+                </div>
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+function openPillarEditModal(id) {
+    const pillar = state.pillars.find(item => Number(item.id) === Number(id));
+
+    if (!pillar) {
+        console.error('Pillar not found:', id);
+        return;
+    }
+
+    const form = document.getElementById('form-edit-pillar');
+
+    form.action = "{{ route('admin.pillars.update', ':id') }}"
+        .replace(':id', id);
+
+    document.getElementById('edit-pillar-name').value = pillar.title || '';
+    document.getElementById('edit-pillar-category').value = pillar.category || '';
+    document.getElementById('edit-pillar-short-description').value = pillar.description || '';
+    document.getElementById('edit-pillar-description').value = pillar.full_description || '';
+    document.getElementById('edit-pillar-icon').value = pillar.icon || '';
+    document.getElementById('edit-pillar-activities').value = pillar.activities || '';
+    document.getElementById('edit-pillar-achievements').value = pillar.achievements || '';
+    document.getElementById('edit-pillar-sort-order').value = pillar.sort_order ?? 0;
+    document.getElementById('edit-pillar-is-active').checked =
+        Boolean(Number(pillar.is_active));
+
+    document.getElementById('edit-pillar-image-preview').src =
+        pillar.image || 'https://placehold.co/800x450?text=No+Image';
+
+    const modal = document.getElementById('modal-edit-pillar');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function closePillarEditModal() {
+    const modal = document.getElementById('modal-edit-pillar');
+
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+}
+
+function openPillarModal() {
+    const modal = document.getElementById('modal-pillar');
+
+    if (!modal) {
+        console.error('Pillar modal not found: #modal-pillar');
+        return;
+    }
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function closePillarModal() {
+    const modal = document.getElementById('modal-pillar');
+
+    if (!modal) return;
+
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+}
+
+// ================= NEWS CRUD MODALS =================
+
+function openNewsAddModal() {
+    const form = document.querySelector('#modal-news-add form');
+
+    form.reset();
+
+    const modal = document.getElementById('modal-news-add');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+
+function openNewsEditModal(id) {
+    const article = state.news.find(item => Number(item.id) === Number(id));
+
+    if (!article) {
+        showToast('Berita tidak ditemukan!', 'warning');
+        return;
+    }
+
+    const form = document.getElementById('form-news-edit');
+
+    form.action = "{{ route('admin.news.update', ':id') }}".replace(':id', id);
+
+    document.getElementById('news-edit-title').value = article.title || '';
+    document.getElementById('news-edit-slug').value = article.slug || '';
+    document.getElementById('news-edit-category').value = article.category || '';
+    document.getElementById('news-edit-excerpt').value = article.excerpt || '';
+    document.getElementById('news-edit-content').value = article.content || '';
+    document.getElementById('news-edit-author').value = article.author || '';
+    document.getElementById('news-edit-status').value = article.status || 'draft';
+
+    document.getElementById('news-edit-preview').src =
+        article.image || 'https://placehold.co/400x250?text=News';
+
+    document.getElementById('news-edit-image').value = '';
+
+    const publishedInput = document.getElementById('news-edit-published');
+
+    if (article.published_at) {
+        const date = new Date(article.published_at);
+
+        publishedInput.value = isNaN(date.getTime())
+            ? ''
+            : new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+                .toISOString()
+                .slice(0, 16);
+    } else {
+        publishedInput.value = '';
+    }
+
+    const modal = document.getElementById('modal-news-edit');
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+
+// Preview new image before uploading
+document.getElementById('news-edit-image').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            document.getElementById('news-edit-preview').src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+
+
+// Render News Articles
+function renderNews() {
+    const container = document.getElementById('news-container');
+
+    container.innerHTML = '';
+
+    state.news.forEach(article => {
+        const item = document.createElement('div');
+
+        const statusClasses = {
+            published: 'bg-emerald-100 text-emerald-700',
+            draft: 'bg-slate-100 text-slate-600',
+            scheduled: 'bg-amber-100 text-amber-700'
+        };
+
+        const statusClass = statusClasses[article.status] || statusClasses.draft;
+
+        const date = article.published_at
+            ? new Date(article.published_at).toLocaleDateString()
+            : 'Belum dijadwalkan';
+
+        item.className = 'py-4 flex flex-col sm:flex-row gap-4 sm:items-center justify-between';
+
+        item.innerHTML = `
+            <div class="flex items-center gap-4 min-w-0">
+                <img
+                    src="${article.image}"
+                    alt="${article.title}"
+                    class="w-24 h-20 object-cover rounded-lg shrink-0 bg-slate-100"
+                >
+
+                <div class="min-w-0">
+                    <span class="text-[10px] font-bold uppercase text-brand-orange">
+                        ${article.category || 'Umum'}
+                    </span>
+
+                    <h3 class="font-bold text-sm text-brand-navy mt-1">
+                        ${article.title}
+                    </h3>
+
+                    <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+                        ${article.excerpt || ''}
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-2 mt-2 text-[10px] text-slate-400">
+                        <span>${article.author || 'Admin'}</span>
+                        <span>•</span>
+                        <span>${date}</span>
+                        <span class="px-2 py-0.5 rounded-full font-bold ${statusClass}">
+                            ${article.status}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                <button type="button"
+                    onclick="openNewsEditModal(${article.id})"
+                    class="p-2 text-brand-navy hover:bg-surface-hover rounded-lg"
+                    title="Edit Berita">
+                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                </button>
+
+                <button type="button"
+                    onclick="confirmDelete('news', ${article.id}, ${JSON.stringify(article.title).replace(/"/g, '&quot;')})"
+                    class="p-2 text-rose-500 hover:bg-rose-50 rounded-lg"
+                    title="Hapus Berita">
+                    <span class="material-symbols-outlined text-[18px]">delete</span>
+                </button>
+            </div>
+        `;
+
+        container.appendChild(item);
+    });
+
+    document.getElementById('badge-news-count').textContent = state.news.length;
+}
 
     // Toggle Status (Enable / Disable)
     function toggleStatus(module, id) {
@@ -1155,7 +2254,10 @@
 
         const deleteRoutes = {
             heroSlides: "{{ route('admin.hero-slides.destroy', ':id') }}",
-            facilities: "{{ route('admin.facilities.destroy', ':id') }}"
+            facilities: "{{ route('admin.facilities.destroy', ':id') }}",
+            tourism: "{{ route('admin.tourism-destinations.destroy', ':id') }}",
+            pillars: "{{ route('admin.pillars.destroy', ':id') }}",
+            news: "{{ route('admin.news.destroy', ':id') }}"
         };
 
         // Delete real database records
@@ -1165,9 +2267,7 @@
             form.method = 'POST';
             form.action = deleteRoutes[module].replace(':id', id);
 
-            const token = document.querySelector(
-                '#form-add-item input[name="_token"]'
-            ).value;
+            const token = document.querySelector('input[name="_token"]').value;
 
             const csrf = document.createElement('input');
             csrf.type = 'hidden';
@@ -1232,17 +2332,28 @@
             'view-tourism': 'Wisata & Reservasi',
             'view-pillars': '4 Pilar Astra',
             'view-news': 'Kabar & Agenda',
-            'view-faq': 'Tanya Jawab (FAQ)'
+            'view-faq': 'Tanya Jawab (FAQ)',
+            'view-settings': 'Pengaturan Website'
         };
         document.getElementById('breadcrumb-title').textContent = names[viewId] || 'Admin';
     }
 
-    // Initial render on load
-    window.addEventListener('DOMContentLoaded', () => {
-        renderHeroSlides();
-        renderFacilities();
-        renderTourism();
-    });
+// Initial render on load
+window.addEventListener('DOMContentLoaded', () => {
+    renderHeroSlides();
+    renderFacilities();
+    renderTourism();
+    renderPillars();
+    renderNews();
+});
+
+function previewLogo(event, previewId) {
+    const file = event.target.files[0];
+
+    if (file) {
+        document.getElementById(previewId).src = URL.createObjectURL(file);
+    }
+}
     </script>
 </body>
 

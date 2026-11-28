@@ -1,238 +1,8 @@
-<!DOCTYPE html>
+@extends('layouts.app')
 
-<html lang="id">
+@section('content')
 
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="web_standard" name="shell-type" />
-    <title>Desa Sejahtera Astra Digital - Desa Kepongpongan Cirebon</title>
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <style>
-    @layer base {
-
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            overscroll-behavior: none;
-        }
-
-        main>:first-child {
-            margin-top: 0 !important;
-        }
-
-        main>:last-child {
-            margin-bottom: 0 !important;
-        }
-    }
-
-    ::-webkit-scrollbar {
-        display: none;
-    }
-    </style>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script id="tailwind-config">
-    tailwind.config = {
-        darkMode: "class",
-        theme: {
-            extend: {
-                "colors": {
-                    "background": "#fbf8ff",
-                    "on-secondary-container": "#5a1c00",
-                    "surface-tint": "#4f54b4",
-                    "on-surface-variant": "#464652",
-                    "inverse-surface": "#2f303b",
-                    "on-primary": "#ffffff",
-                    "tertiary": "#481900",
-                    "tertiary-fixed": "#ffdbcc",
-                    "tertiary-fixed-dim": "#ffb693",
-                    "primary": "#14147c",
-                    "on-error": "#ffffff",
-                    "secondary-container": "#fc6c29",
-                    "secondary-fixed-dim": "#ffb599",
-                    "outline": "#777683",
-                    "on-secondary-fixed-variant": "#7f2b00",
-                    "error-container": "#ffdad6",
-                    "secondary": "#a63b00",
-                    "on-tertiary": "#ffffff",
-                    "on-primary-fixed": "#04006d",
-                    "surface-variant": "#e2e1f0",
-                    "primary-container": "#2d3091",
-                    "on-tertiary-container": "#f0905f",
-                    "on-secondary-fixed": "#370e00",
-                    "surface-container-low": "#f4f2ff",
-                    "on-background": "#1a1b25",
-                    "on-tertiary-fixed-variant": "#773207",
-                    "error": "#ba1a1a",
-                    "on-primary-container": "#9ca0ff",
-                    "surface-bright": "#fbf8ff",
-                    "on-error-container": "#93000a",
-                    "secondary-fixed": "#ffdbce",
-                    "surface-container-lowest": "#ffffff",
-                    "primary-fixed": "#e1e0ff",
-                    "surface-container-highest": "#e2e1f0",
-                    "surface-container": "#eeecfc",
-                    "surface-dim": "#dad8e8",
-                    "inverse-on-surface": "#f1efff",
-                    "on-tertiary-fixed": "#351000",
-                    "on-secondary": "#ffffff",
-                    "inverse-primary": "#c0c1ff",
-                    "outline-variant": "#c7c5d4",
-                    "surface-container-high": "#e8e7f6",
-                    "primary-fixed-dim": "#c0c1ff",
-                    "on-primary-fixed-variant": "#373a9b",
-                    "tertiary-container": "#6b2900",
-                    "surface": "#fbf8ff",
-                    "on-surface": "#1a1b25"
-                },
-                "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-                },
-                "spacing": {
-                    "space-xs": "0.25rem",
-                    "space-md": "1rem",
-                    "space-sm": "0.5rem",
-                    "space-xl": "2.5rem",
-                    "space-lg": "1.5rem",
-                    "margin-mobile": "1rem",
-                    "gutter-mobile": "1rem",
-                    "gutter": "1.5rem",
-                    "margin": "2rem"
-                },
-                "fontFamily": {
-                    "headline-lg": ["Plus Jakarta Sans"],
-                    "title-md": ["Plus Jakarta Sans"],
-                    "body-sm": ["Inter"],
-                    "headline-sm": ["Plus Jakarta Sans"],
-                    "label-md": ["Plus Jakarta Sans"],
-                    "headline-lg-mobile": ["Plus Jakarta Sans"],
-                    "body-lg": ["Inter"],
-                    "headline-md": ["Plus Jakarta Sans"],
-                    "label-sm": ["Plus Jakarta Sans"],
-                    "label-lg": ["Plus Jakarta Sans"],
-                    "display": ["Plus Jakarta Sans"],
-                    "body-md": ["Inter"],
-                    "display-mobile": ["Plus Jakarta Sans"]
-                },
-                "fontSize": {
-                    "headline-lg": ["32px", {
-                        "lineHeight": "40px",
-                        "letterSpacing": "-0.015em",
-                        "fontWeight": "700"
-                    }],
-                    "title-md": ["16px", {
-                        "lineHeight": "24px",
-                        "fontWeight": "600"
-                    }],
-                    "body-sm": ["12px", {
-                        "lineHeight": "18px",
-                        "fontWeight": "400"
-                    }],
-                    "headline-sm": ["20px", {
-                        "lineHeight": "28px",
-                        "fontWeight": "600"
-                    }],
-                    "label-md": ["12px", {
-                        "lineHeight": "16px",
-                        "letterSpacing": "0.02em",
-                        "fontWeight": "600"
-                    }],
-                    "headline-lg-mobile": ["26px", {
-                        "lineHeight": "34px",
-                        "letterSpacing": "-0.01em",
-                        "fontWeight": "700"
-                    }],
-                    "body-lg": ["16px", {
-                        "lineHeight": "26px",
-                        "fontWeight": "400"
-                    }],
-                    "headline-md": ["24px", {
-                        "lineHeight": "32px",
-                        "letterSpacing": "-0.01em",
-                        "fontWeight": "600"
-                    }],
-                    "label-sm": ["11px", {
-                        "lineHeight": "14px",
-                        "letterSpacing": "0.03em",
-                        "fontWeight": "600"
-                    }],
-                    "label-lg": ["14px", {
-                        "lineHeight": "20px",
-                        "letterSpacing": "0.01em",
-                        "fontWeight": "600"
-                    }],
-                    "display": ["44px", {
-                        "lineHeight": "52px",
-                        "letterSpacing": "-0.02em",
-                        "fontWeight": "700"
-                    }],
-                    "body-md": ["14px", {
-                        "lineHeight": "22px",
-                        "fontWeight": "400"
-                    }],
-                    "display-mobile": ["32px", {
-                        "lineHeight": "40px",
-                        "letterSpacing": "-0.015em",
-                        "fontWeight": "700"
-                    }]
-                }
-            }
-        }
-    };
-    </script>
-</head>
-
-<body
-    class="bg-surface font-body-md text-body-md text-on-surface antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed">
-    <header
-        class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_2px_8px_-2px_rgba(45,48,145,0.06),0_1px_3px_0_rgba(37,38,49,0.03)] border-b border-surface-variant/70">
-        <div
-            class="h-20 max-w-[1440px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-gutter">
-            <div class="flex items-center gap-space-md shrink-0"><img alt="Desa Sejahtera Astra Digital Logo"
-                    class="h-8 w-auto object-contain"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT_R3MjQDHJaiLFFLnIXOPPucuqJDcwFZAPhpDT3Vcz9GY56n_iWrHguSshv31etpBCU-ofD9Z5-MeBwW1sQnk9ummE68kjFkFIFwzktu7eBMHt4tBdyuIXzH-7NhqdWoZw_6eHlIvh-oZDzJ59HxAWPAkVRikID6kg-vRSZ_LlsXHXvbzi62DSDk60gZ65DTdzLYZSYMdEHgqea2ZTBOWEUDfNxWdD8gVhj9uGUseBwCFagbg7psU" />
-                <div class="flex flex-col"><span
-                        class="font-title-md text-title-md text-primary tracking-tight leading-none">Desa Sejahtera Astra Digital</span><span
-                        class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Kepongpongan, Cirebon</span>
-                </div>
-            </div>
-            <nav class="hidden xl:flex items-center gap-1"
-                data-active-classes="bg-surface-container text-primary font-bold rounded-lg shadow-sm"><a
-                    class="font-label-lg text-label-lg text-on-surface-variant px-3 py-2 rounded-lg hover:bg-surface-container hover:text-on-surface transition-colors"
-                    data-path="beranda" href="#">Beranda</a><a
-                    class="font-label-lg text-label-lg text-on-surface-variant px-3 py-2 rounded-lg hover:bg-surface-container hover:text-on-surface transition-colors"
-                    data-path="profil-desa" href="#">Profil Desa</a><a
-                    class="font-label-lg text-label-lg text-on-surface-variant px-3 py-2 rounded-lg hover:bg-surface-container hover:text-on-surface transition-colors"
-                    data-path="sarana-kampung" href="#">Program</a><a aria-current="page"
-                    class="px-3 py-2 transition-colors bg-surface-container text-primary font-bold rounded-lg shadow-sm"
-                    data-path="wisata-kampung" href="#">Wisata</a><a
-                    class="font-label-lg text-label-lg text-on-surface-variant px-3 py-2 rounded-lg hover:bg-surface-container hover:text-on-surface transition-colors"
-                    data-path="berita" href="#">Berita</a><a
-                    class="font-label-lg text-label-lg text-on-surface-variant px-3 py-2 rounded-lg hover:bg-surface-container hover:text-on-surface transition-colors"
-                    data-path="kontak" href="#">Kontak</a></nav>
-            <div class="flex items-center gap-space-sm sm:gap-space-md shrink-0">
-                <div class="pl-1 border-l border-outline-variant/60"></div>
-            </div>
-        </div>
-    </header>
-    <main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]">
+<main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]">
         <div class="flex flex-col w-full">
             <!-- Immersive Destination Intro & Ambient Filter -->
             <section class="relative w-full bg-surface-container-low overflow-hidden pb-16 pt-8">
@@ -282,7 +52,7 @@
                             <div class="relative h-64 overflow-hidden">
                                 <img alt="Kampung Edukasi Batik &amp; Sentra Seni Tradisional"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    src="https://lh3.googleusercontent.com/aida/ALJJyrBm1lb4eJ-Jq0pkwv8Z2I5niUIqMoJSYB3NrzzMjaok6SvwCbPe0xxK8rEiFBt9i62UVNc51qa6f6R4bcPwr2fC0o8Ds0hv1wnfbacNaQvg6yfa9Nl8NJjIVZHLHHR2LppCSi0p8GRziuU-D3xDSNNws7v53Fn13WmleNsQj_T6xr_4cMe_pqSO8t92IrQOtygubKNy5eJlIr-KUbBHwyE0UJP2nwnKUwlPeHXrH7mS" />
+                                    src="{{ asset('images/wisata/wisata1.jpg') }}" />
                                 <div class="absolute top-4 left-4">
                                     <span
                                         class="px-3 py-1 rounded-full font-label-sm text-label-sm bg-surface-container-lowest/90 backdrop-blur text-primary font-bold shadow-sm">Wisata
@@ -356,7 +126,7 @@
                             <div class="relative h-64 overflow-hidden">
                                 <img alt="Wisata Susur Tubing Sungai Cipager Asri"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    src="https://lh3.googleusercontent.com/aida/ALJJyrCEqqBTUmz61SSwPWBEOdTzeaQbS9UoLpDNgNI02vZFtoXQpiJnhUfmZRW7Ud8ZVOdMLf_FdUA_-6EnFXpG-AWWBYQSh1MTS573gIBH715nzafSmRfDCjwF7aQQTBWZ7LHVW5DlS_P0nB9EBoocOmq_hVBKnetLx9MvDpllEZpSkmGcDfgKauWa4up5j9D2n5eYizSt_xvLHGndcY6plSnUtJwnBikTs_3JPVhVPOs" />
+                                    src="{{ asset('images/wisata/wisata2.jpg') }}" />
                                 <div class="absolute top-4 left-4">
                                     <span
                                         class="px-3 py-1 rounded-full font-label-sm text-label-sm bg-secondary-container text-on-secondary font-bold shadow-sm">Favorit
@@ -430,7 +200,7 @@
                             <div class="relative h-64 overflow-hidden">
                                 <img alt="Agrowisata Nila Bioflok &amp; Petik Mangga Gincu"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    src="https://lh3.googleusercontent.com/aida/ALJJyrD1QQk-s2IQ81kWxqok5a2I_cB5AYK_gsVdDOz4VhzWtN8rH4EQg_iiiLD1sQ8Exuu2c8uVrieG1X_qTmNlr7vvyTcP8KBo3LlFTbBMdiFYrEaqCOd0Pvs4AQrUZTI8AtIFk8yG0rr2Zu6ySkC3tZnEUthg2XZr5tILEpQ1-s7gcaAu9X6wpJphdwLoO1L6s4mDXyHHNwEEg-kxvdcS1IUPFk-a6B2iOosBn7Oyqiy6" />
+                                    src="{{ asset('images/wisata/wisata3.jpg') }}" />
                                 <div class="absolute top-4 left-4">
                                     <span
                                         class="px-3 py-1 rounded-full font-label-sm text-label-sm bg-surface-container-lowest/90 backdrop-blur text-primary font-bold shadow-sm">Agrowisata
@@ -506,7 +276,7 @@
                             <div class="relative h-64 overflow-hidden">
                                 <img alt="Paket Edukasi ProKlim &amp; Bank Sampah Mandiri"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    src="https://lh3.googleusercontent.com/aida/ALJJyrCfogfnD7hSI_iXBgivChbLO_8dxODhlTlIptS6syzVGkEG0pYJjIqJcP9O5lskxBk4hpo-KB4efkAvMSkrR9Ogiq1RGPkKi8Y_DJcXO-TrQUTGfaTTYlDMSROJ9jx6kuqvqMc3wQmt6QuN_gg4hric3Prx8jPwVRq4oNHb3azfNjVsY0MqMY1xDgY0UdJLHebLcP5mjwdtpc14sWaQgvZ-U9RYV416h6SVl7abVTI" />
+                                    src="{{ asset('images/wisata/wisata2.jpg') }}" />
                                 <div class="absolute top-4 left-4">
                                     <span
                                         class="px-3 py-1 rounded-full font-label-sm text-label-sm bg-surface-container-lowest/90 backdrop-blur text-primary font-bold shadow-sm">Edukasi
@@ -580,7 +350,7 @@
                             <div class="relative h-64 overflow-hidden">
                                 <img alt="Jelajah Kuliner Nasi Jamblang Daun Jati"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    src="https://lh3.googleusercontent.com/aida/ALJJyrD7oM1GPRCYR9pw7efEnB-tRkkcCkkBv98RImOUADO0R40IANE2XzO42H8i19V-pXjXMH0UH5flLhEcaWiZjCVFbCVwPT-VLoQ91DyIdDyB6yaD-Xn_VI2iScyjgPQLLHVCPDq0GFUJru6-oKSjQQ3pk-aSiNkCLsQZxrLdL0XuhtzK8edxMUt8TwaSXDoVvB4HB7MrfljGcK34Fx61Hv5xpf8m3A7zieZB_ckRE4Y" />
+                                    src="{{ asset('images/wisata/wisata3.jpg') }}" />
                                 <div class="absolute top-4 left-4">
                                     <span
                                         class="px-3 py-1 rounded-full font-label-sm text-label-sm bg-surface-container-lowest/90 backdrop-blur text-primary font-bold shadow-sm">Kuliner
@@ -656,7 +426,7 @@
                             <div class="relative h-64 overflow-hidden">
                                 <img alt="Kemah Edukasi Tepian Sungai &amp; Api Unggun"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    src="https://lh3.googleusercontent.com/aida/ALJJyrCEqqBTUmz61SSwPWBEOdTzeaQbS9UoLpDNgNI02vZFtoXQpiJnhUfmZRW7Ud8ZVOdMLf_FdUA_-6EnFXpG-AWWBYQSh1MTS573gIBH715nzafSmRfDCjwF7aQQTBWZ7LHVW5DlS_P0nB9EBoocOmq_hVBKnetLx9MvDpllEZpSkmGcDfgKauWa4up5j9D2n5eYizSt_xvLHGndcY6plSnUtJwnBikTs_3JPVhVPOs" />
+                                    src="{{ asset('images/wisata/wisata1.jpg') }}" />
                                 <div class="absolute top-4 left-4">
                                     <span
                                         class="px-3 py-1 rounded-full font-label-sm text-label-sm bg-surface-container-lowest/90 backdrop-blur text-primary font-bold shadow-sm">Eksplorasi
@@ -855,80 +625,5 @@
             </script>
         </div>
     </main>
-    <footer class="w-full bg-surface-container-lowest border-t border-surface-variant/80 pt-space-xl pb-space-lg">
-        <div class="max-w-[1440px] mx-auto px-margin-mobile lg:px-margin">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-gutter pb-space-xl">
-                <div class="lg:col-span-2 flex flex-col gap-space-md">
-                    <div class="flex items-center gap-space-md"><img alt="Astra Desa Digital Logo"
-                            class="h-9 w-auto object-contain"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3SWWN_mr8MACCnuDU6p1t5GJORYcsrqN_Ou4LnjzIKup7AslRstdfIPCC2kjWsTp2ysDlQwHR_3U2SpJdUskLmsxX5FEs-eQa7l-lsHfNiNyA6bhUryWGBacW6sEdIbjy2Sx6RnL8jGHw1kcVb85HrluNuAZV5-qPHvoJYo1s4AolOiszvirOhNt4hrpvi5QiDeHoxJW2no37A9aDSJ49yWoWf1Hs8Sq0pCrgChbknL_LI9Fq6zfJ" /><span
-                            class="font-title-md text-title-md text-primary font-bold">Astra Desa Digital</span></div>
-                    <p class="font-body-md text-body-md text-on-surface-variant max-w-md">Inisiatif transformasi digital
-                        kolaboratif PT Astra International Tbk bersama Pemerintah Desa Kepongpongan, Kecamatan Talun,
-                        Kabupaten Cirebon untuk mewujudkan tata kelola desa modern, pariwisata berdaya saing, dan
-                        kemandirian ekonomi masyarakat.</p>
-                    <div class="flex items-center gap-space-sm pt-space-xs"><span
-                            class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-surface-container text-primary hover:bg-primary hover:text-on-primary transition-colors cursor-pointer"><span
-                                class="material-symbols-outlined text-[18px]">public</span></span><span
-                            class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-surface-container text-primary hover:bg-primary hover:text-on-primary transition-colors cursor-pointer"><span
-                                class="material-symbols-outlined text-[18px]">share</span></span><span
-                            class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-surface-container text-primary hover:bg-primary hover:text-on-primary transition-colors cursor-pointer"><span
-                                class="material-symbols-outlined text-[18px]">mail</span></span></div>
-                </div>
-                <div class="flex flex-col gap-space-sm">
-                    <h4 class="font-title-md text-title-md text-primary font-bold mb-space-xs">Navigasi Cepat</h4><a
-                        class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="beranda" href="#">Beranda Utama</a><a
-                        class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="profil-desa" href="#">Profil &amp; Geografis</a><a
-                        class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="sarana-kampung" href="#">Fasilitas &amp; Sarana</a><a
-                        class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="wisata-kampung" href="#">Destinasi Wisata</a><a
-                        class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="program-desa" href="#">Program Kerja &amp; CSR</a>
-                </div>
-                <div class="flex flex-col gap-space-sm">
-                    <h4 class="font-title-md text-title-md text-primary font-bold mb-space-xs">Layanan Warga</h4><a
-                        class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="portal-masuk" href="#">Sistem Informasi Desa</a><a
-                        class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="berita" href="#">Kabar &amp; Agenda Warga</a><a
-                        class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="kontak" href="#">Pengaduan &amp; Aspirasi</a><span
-                        class="font-body-md text-body-md text-on-surface-variant">Permohonan Surat
-                        Keterangan</span><span class="font-body-md text-body-md text-on-surface-variant">Transparansi
-                        Anggaran Desa</span>
-                </div>
-                <div class="flex flex-col gap-space-sm">
-                    <h4 class="font-title-md text-title-md text-primary font-bold mb-space-xs">Kantor Kuwu Desa</h4>
-                    <div class="flex items-start gap-space-xs text-on-surface-variant font-body-sm text-body-sm"><span
-                            class="material-symbols-outlined text-[18px] text-secondary mt-0.5">location_on</span><span>Jl.
-                            Nyi Ageng Serang No. 12, Kepongpongan, Talun, Cirebon, Jawa Barat 45171</span></div>
-                    <div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm"><span
-                            class="material-symbols-outlined text-[18px] text-secondary">call</span><span>+62 (231)
-                            833-2190</span></div>
-                    <div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm"><span
-                            class="material-symbols-outlined text-[18px] text-secondary">mail</span><span>pemdes@kepongpongan.desa.id</span>
-                    </div>
-                    <div
-                        class="mt-space-xs p-3 rounded-lg bg-surface-container-low border border-outline-variant/60 flex items-center gap-space-xs">
-                        <span class="material-symbols-outlined text-secondary text-[20px]">verified</span><span
-                            class="font-label-sm text-label-sm text-primary font-bold">Desa Binaan Astra Cirebon</span>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="pt-space-md border-t border-surface-variant/70 flex flex-col sm:flex-row items-center justify-between gap-space-sm text-center sm:text-left">
-                <p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 Astra Desa Digital &amp; Pemerintah
-                    Desa Kepongpongan. Didukung penuh oleh Semangat Astra Terpadu Untuk (SATU) Indonesia Awards.</p>
-                <div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant"><span
-                        class="hover:text-primary cursor-pointer">Kebijakan Privasi</span><span
-                        class="hover:text-primary cursor-pointer">Ketentuan Layanan</span><span
-                        class="hover:text-primary cursor-pointer">Peta Situs</span></div>
-            </div>
-        </div>
-    </footer>
-</body>
 
-</html>
+@endsection
